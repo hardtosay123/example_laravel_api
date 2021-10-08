@@ -37,9 +37,8 @@ class TaskController extends Controller
         ]);
         */
         
-        Task::create($request->all());
-        
-        return http_response_code(201);
+        $addTask = Task::create($request->all());
+        return response()->json($addTask, 201, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
     }
 
     public function update(Request $request, Task $id)
@@ -60,14 +59,8 @@ class TaskController extends Controller
         $task->description = $request->input('description');
 
         $task->save();
-        /*
-        $addTask = Task::create([
-            'title' => $request->input('title'),
-            'description' => $request->input('description')
-        ]);
-        */
         
-        return http_response_code(200);
+        return response()->json($task, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
     }
 
     public function destroy(Request $request, Task $id)
