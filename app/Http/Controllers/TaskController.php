@@ -11,12 +11,12 @@ class TaskController extends Controller
     public function index()
     {
         $tasks = Task::all();
-        return response()->json($tasks, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+        return $this->responseJson($tasks, 200);
     }
 
     public function show(Task $id)
     {
-        return response()->json($id, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+        return $this->responseJson($id, 200);
     }
 
     public function store(Request $request)
@@ -28,7 +28,7 @@ class TaskController extends Controller
         $validator = Validator::make($request->all(), $rules);
     
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 400, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+            return $this->responseJson($validator->errors(), 400);
         }
         /*
         $addTask = Task::create([
@@ -38,7 +38,7 @@ class TaskController extends Controller
         */
         
         $addTask = Task::create($request->all());
-        return response()->json($addTask, 201, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+        return $this->responseJson($addTask, 201);
     }
 
     public function update(Request $request, Task $id)
@@ -50,7 +50,7 @@ class TaskController extends Controller
         $validator = Validator::make($request->all(), $rules);
     
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 400, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+            return $this->responseJson($validator->errors(), 400);
         }
 
         $task = $id;
@@ -60,7 +60,7 @@ class TaskController extends Controller
 
         $task->save();
         
-        return response()->json($task, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+        return $this->responseJson($task, 200);
     }
 
     public function destroy(Request $request, Task $id)
@@ -68,6 +68,6 @@ class TaskController extends Controller
         $task = $id;
         $task->delete();
 
-        return http_response_code(204);
+        return $this->responseJson([], 204);
     }
 }
